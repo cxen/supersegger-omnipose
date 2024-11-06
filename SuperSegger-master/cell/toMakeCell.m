@@ -46,6 +46,9 @@ theta = (-props.Orientation)*pi/180;
 A = props.Area;
 mask= logical(celld.mask);
 
+% make effective rod-shape radius and length
+[Rrod, Lrod] = intMakeRod( mask );
+
 imRot = (imrotate(uint8(mask), -props.Orientation));
 imRot = double(imRot);
 ss = size(imRot);
@@ -70,9 +73,14 @@ Mrot = [e1,e2];
 r_center = Mrot*([mean(xxx(xind)),mean(yyy(yind))]'-(ss(2:-1:1))'/2)+...
  (ss_mask(2:-1:1)/2+celld.r_offset-[0.5,0.5])';
 
-% center of mass for cell
-Xcm = props.Centroid(1);
-Ycm = props.Centroid(2);
+% center of mass for cell - using medoid if available
+if isfield(props, 'Medoid')
+    Xcm = props.Medoid(1);
+    Ycm = props.Medoid(2);
+else
+    Xcm = props.Centroid(1);
+    Ycm = props.Centroid(2);
+end
 rcm = [Xcm,Ycm];
 
 if ~isempty( e1_old )
@@ -123,6 +131,9 @@ celld.pole.e1= e1;
 celld.pole.op_ori = 0;
 celld.pole.op_age = NaN;
 celld.pole.np_age = NaN;
+
+celld.Lrod = Lrod;
+celld.Rrod = Rrod;
 
 % Debugging info.
 debug_flag = 0;

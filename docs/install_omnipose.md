@@ -1,6 +1,6 @@
 # Step-by-step Omnipose installation instructions (command line based, assumes cellpose is not already installed)
  
- Updated: Jan 23, 2024.
+ Updated: August 20, 2024.
 
  [Windows](https://github.com/tlo-bot/supersegger-omnipose/blob/main/docs/install_omnipose.md#windows) \ [Linux](https://github.com/tlo-bot/supersegger-omnipose/blob/main/docs/install_omnipose.md#linux-debianubuntu) \ [MacOS](https://github.com/tlo-bot/supersegger-omnipose/blob/main/docs/install_omnipose.md#macos)
 
@@ -85,15 +85,25 @@ sudo apt install libxcb-xinerama0
 
    Latest Miniconda*:
 ```
-(sudo) wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
-rm -rf bash Miniconda3-latest-Linux-x86_64.sh
+mkdir -p ~/miniconda3
+(sudo) wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash Miniconda3-latest-Linux-x86_64.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
 ```
 
->*Could also install [Anaconda](https://www.anaconda.com/products/distributionhttps://www.anaconda.com/products/distribution) (not recommended): https://repo.anaconda.com/archive/
+3. Initialize conda in shell:
+```
+~/miniconda3/bin/conda init bash
+```
+   or for zsh:
+```
+~/miniconda3/bin/conda init zsh
+```
+
+>*Could also install [Anaconda](https://www.anaconda.com/products/distribution) (not recommended): https://repo.anaconda.com/archive/
 
 
-3. Restart shell:
+<!-- 3. Restart shell:
 ```
 source ~/.bashrc
 ```
@@ -102,7 +112,7 @@ source ~/.bashrc
 ```
 conda config --set auto_activate_base false
 ```
-   and restart shell.
+   and restart shell. -->
 
 
 4. In Command Window, create environment named 'omnipose', install Python to the environment, activate environment, and install Omnipose.
@@ -155,28 +165,42 @@ brew install curl
 brew install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6
 ```
 
+   Latest miniconda* for Intel CPUs:
 ```
-brew install wget
+mkdir -p ~/miniconda3
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -o ~/miniconda3/miniconda.sh
+bash Miniconda3-latest-MacOSX-x86_64.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
+```
+   Latest miniconda* for M1 CPUs:
+```
+mkdir -p ~/miniconda3
+curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
 ```
 
-   Latest miniconda*:
-```
-(sudo) wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
-bash Miniconda3-latest-MacOSX-x86_64.sh
-rm -rf bash Miniconda3-latest-MacOSX-x86_64.sh
-```
->*Could also install [Anaconda](https://www.anaconda.com/products/distributionhttps://www.anaconda.com/products/distribution) (not recommended): https://repo.anaconda.com/archive/
+>*Could also install [Anaconda](https://www.anaconda.com/products/distribution) (not recommended): https://repo.anaconda.com/archive/
 
-3. Restart shell:
+<!-- 3. Restart shell:
 ```
 source ~/.bashrc
 ```
    or for macOS 10.15+:
 ```
 source ~/.zshrc
+``` -->
+
+3. Initialize conda in shell:
+```
+~/miniconda3/bin/conda init bash
+```
+   or for macOS 10.15+:
+```
+~/miniconda3/bin/conda init zsh
 ```
 
-   Optional: to prevent base environment from loading automatically, run:
+   Optional: to prevent base environment from loading automatically in shell, run:
 ```
 conda config --set auto_activate_base false
 ```
